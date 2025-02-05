@@ -1,0 +1,33 @@
+{
+  "name": "my-vue-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "node server/server.cjs"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.3",
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "json-server": "^1.0.0-beta.3",
+    "mongoose": "^8.9.7",
+    "primeicons": "^7.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "vue-spinner": "^1.0.4",
+    "vue-toastification": "^2.0.0-rc.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.3",
+    "vite": "^6.0.5"
+  }
+}
