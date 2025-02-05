@@ -9,6 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+mongoose.set('strictQuery', false)
 
 const url = process.env.MONGO_URL;
 
@@ -34,6 +35,14 @@ const JobSchema = new mongoose.Schema({
   },
 });
 
+JobSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  }
+})
+
 const Job = mongoose.model('Job', JobSchema);
 
 fs.readFile('./sample-data/jobs.json', 'utf-8', async (err, data) => {
@@ -46,18 +55,21 @@ fs.readFile('./sample-data/jobs.json', 'utf-8', async (err, data) => {
     return;
   }
 
-  const jsonData = JSON.parse(data);
+  const existingJobs = await Job.find({});
+  if (existingJobs.length === 0) {
+    const jsonData = JSON.parse(data);
 
-  const promises = jsonData.jobs.map((jobData) => {
-    const job = new Job(jobData);
-    return job.save();
-  });
+    const promises = jsonData.jobs.map((jobData) => {
+      const job = new Job(jobData);
+      return job.save();
+    });
 
-  try {
-    await Promise.allSettled(promises);
-    console.log(`Data saved to DB`);
-  } catch (error) {
-    console.log(`Error in saving data to DB`, error)
+    try {
+      await Promise.allSettled(promises);
+      console.log(`Data saved to DB`);
+    } catch (error) {
+      console.log(`Error in saving data to DB`, error)
+    }
   }
 })
 
@@ -70,9 +82,13 @@ app.get('/api/jobs', (req, res) => {
 app.get('/api/jobs/:id', (req, res) => {
   const jobId = req.params.id;
 
-  Job.findById(jobId).then(note => {
-    if (note) {
-      res.json(note)
+  if (!mongoose.Types.ObjectId.isValid(jobId)) {
+    return res.status(400).send({ error: 'Invalid ID format' });
+  }
+
+  Job.findById(jobId).then(job => {
+    if (job) {
+      res.json(job)
     } else {
       res.status(404).end()
     }

@@ -19,6 +19,7 @@ const truncatedDescription = computed(() => {
 const toggleFullDescription = () => {
   showFullDescription.value = !showFullDescription.value;
 }
+
 </script>
 <template>
   <div class="bg-white rounded-xl shadow-md relative">
@@ -50,7 +51,7 @@ const toggleFullDescription = () => {
                   :to="`/jobs/${job.id}`"
                   class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm"
                 >
-                  Read More
+                  Read More {{ job.id }}
                 </RouterLink>
               </div>
             </div>
