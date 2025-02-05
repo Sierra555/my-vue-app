@@ -43,7 +43,7 @@ const handleSubmit = async () => {
     }
   }
   try {
-    const res = await axios.put(`/api/jobs/${jobId}`, updatedJob);
+    const res = await axios.put(`${import.meta.env.VITE_PUBLIC_URL}/api/jobs/${jobId}`, updatedJob);
 
     toast.success('Job Edited Successdully!');
     router.push(`/jobs/${res.data.id}`);
@@ -55,7 +55,7 @@ const handleSubmit = async () => {
 
 onMounted(async() => {
   try {
-    const res = await axios.get(`/api/jobs/${jobId}`);
+    const res = await axios.get(`${import.meta.env.VITE_PUBLIC_URL}/api/jobs/${jobId}`);
     state.job = res.data;
 
     form.type = state.job.type;
