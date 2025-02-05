@@ -19,7 +19,6 @@ const state = reactive({
 });
 
 onMounted(async() => {
-  console.log(import.meta.env.VITE_PUBLIC_URL);
   try {
     const res = await axios.get(`${import.meta.env.VITE_PUBLIC_URL}/api/jobs`);
     state.jobs = res.data;
