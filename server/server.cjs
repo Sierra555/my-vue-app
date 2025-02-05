@@ -133,10 +133,10 @@ app.put('/api/jobs/:id', (req, res, next) => {
 
 const path = require('path');
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../dist', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000
