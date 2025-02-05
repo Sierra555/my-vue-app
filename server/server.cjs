@@ -11,13 +11,6 @@ app.use(express.json());
 app.use(cors());
 
 const url = process.env.MONGO_URL;
-const path = require('path');
-
-app.use(express.static(path.join(__dirname, 'dist')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-});
 
 mongoose.connect(url)
   .then(result => {
@@ -137,6 +130,14 @@ app.put('/api/jobs/:id', (req, res, next) => {
   .then(updatedJob => res.json(updatedJob))
   .catch(err => next(err))
 })
+
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
