@@ -9,7 +9,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://your-app-name.onrender.com',
+        target: 'https://find-vue-job.onrender.com/',
         changeOrigin: true,
       }
     }
